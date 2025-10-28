@@ -26,22 +26,24 @@ def test_checkout():
     
     product1 = driver.find_element(AppiumBy.XPATH,'//android.widget.TextView[@content-desc="test-Price" and @text="$29.99"]').text
     price1 = product1.replace("$", "")
+    driver.find_element(AppiumBy.XPATH, '(//android.view.ViewGroup[@content-desc="test-ADD TO CART"])[1]').click()
     product2 = driver.find_element(AppiumBy.XPATH,'//android.widget.TextView[@content-desc="test-Price" and @text="$9.99"]').text
     price2 = product2.replace("$", "")
+    driver.find_element(AppiumBy.XPATH, '(//android.view.ViewGroup[@content-desc="test-ADD TO CART"])').click()
 
     total = float(price1) + float(price2)
     assert total == 39.98
     
-    # Buat Menjadi list
-    driver.find_element(AppiumBy.XPATH, '//android.view.ViewGroup[@content-desc="test-Toggle"]/android.widget.ImageView').click()
-    wait = WebDriverWait(driver, 10)
+#     # Buat Menjadi list
+#     driver.find_element(AppiumBy.XPATH, '//android.view.ViewGroup[@content-desc="test-Toggle"]/android.widget.ImageView').click()
+#     wait = WebDriverWait(driver, 10)
 
-   # tambah 2 produk
-    for i in range(2):
-        el = wait.until(
-            EC.element_to_be_clickable((AppiumBy.XPATH, '(//android.view.ViewGroup[@content-desc="test-ADD TO CART"])[1]'))
-        )
-        el.click()
+#    # tambah 2 produk
+#     for i in range(2):
+#         el = wait.until(
+#             EC.element_to_be_clickable((AppiumBy.XPATH, '(//android.view.ViewGroup[@content-desc="test-ADD TO CART"])[1]'))
+#         )
+#         el.click()
 
     # buka cart
     driver.find_element(AppiumBy.XPATH, '//android.view.ViewGroup[@content-desc="test-Cart"]').click()
@@ -55,10 +57,18 @@ def test_checkout():
     checkout_btn.click()
 
     # isi form checkout
-    driver.find_element(AppiumBy.XPATH, '//android.widget.EditText[@content-desc="test-First Name"]').send_keys('Al')
-    driver.find_element(AppiumBy.XPATH, '//android.widget.EditText[@content-desc="test-Last Name"]').send_keys('Fani')
-    driver.find_element(AppiumBy.XPATH, '//android.widget.EditText[@content-desc="test-Zip/Postal Code"]').send_keys('1')
+    driver.find_element(AppiumBy.XPATH, '//android.widget.EditText[@content-desc="test-First Name"]').send_keys('Vedy')
+    driver.find_element(AppiumBy.XPATH, '//android.widget.EditText[@content-desc="test-Last Name"]').send_keys('Aditya')
+    driver.find_element(AppiumBy.XPATH, '//android.widget.EditText[@content-desc="test-Zip/Postal Code"]').send_keys('123456')
     driver.find_element(AppiumBy.XPATH, '//android.view.ViewGroup[@content-desc="test-CONTINUE"]').click()
+
+    co_product1 = driver.find_element(AppiumBy.XPATH, '//android.widget.TextView[@text="$29.99"]').text
+    ov_prod1 = co_product1.replace("$", "")
+    assert ov_prod1 == price1
+
+    co_product2 = driver.find_element(AppiumBy.XPATH, '//android.widget.TextView[@text="$9.99"]').text
+    ov_prod2 = co_product2.replace("$", "")
+    assert ov_prod2 == price2
 
     # scroll sampai ketemu FINISH
     finish_btn = driver.find_element(
@@ -66,6 +76,13 @@ def test_checkout():
         'new UiScrollable(new UiSelector().scrollable(false).instance(0))'
         '.scrollIntoView(new UiSelector().text("FINISH").instance(0));'
     )
+
+    item_total = driver.find_element(AppiumBy.XPATH,'//android.widget.TextView[@text="Item total: $39.98"]').text
+    itemTotal = item_total.replace("Item total: $", "")
+    assert float(itemTotal) == total
+
+    # grand_total = driver.find_element(AppiumBy.XPATH, '//android.widget.TextView[@text="Total: $43.18"]')
+    # tax = driver.find_element(AppiumBy.XPATH, '//android.widget.TextView[@text="Tax: $3.20"]')
     finish_btn.click()
 
     driver.quit()
