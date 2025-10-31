@@ -34,17 +34,6 @@ def test_checkout():
     total = float(price1) + float(price2)
     assert total == 39.98
     
-#     # Buat Menjadi list
-#     driver.find_element(AppiumBy.XPATH, '//android.view.ViewGroup[@content-desc="test-Toggle"]/android.widget.ImageView').click()
-#     wait = WebDriverWait(driver, 10)
-
-#    # tambah 2 produk
-#     for i in range(2):
-#         el = wait.until(
-#             EC.element_to_be_clickable((AppiumBy.XPATH, '(//android.view.ViewGroup[@content-desc="test-ADD TO CART"])[1]'))
-#         )
-#         el.click()
-
     # buka cart
     driver.find_element(AppiumBy.XPATH, '//android.view.ViewGroup[@content-desc="test-Cart"]').click()
 
@@ -89,5 +78,8 @@ def test_checkout():
     grandTotal = grand_total.replace("Total: $", "")
     assert float(grandTotal) == 43.18
     finish_btn.click()
+    
+    complete = driver.find_element(AppiumBy.XPATH,'//android.widget.TextView[@text="CHECKOUT: COMPLETE!"]').text
+    assert complete == "CHECKOUT: COMPLETE!"
 
     driver.quit()
