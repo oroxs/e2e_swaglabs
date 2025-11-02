@@ -2,4 +2,4 @@ __pycache__
 .pytest_cache
 .venv
 allure-results
-allure-reports
+allure-report
