@@ -1,5 +1,5 @@
 class Loc:
-    title = ''
+    title = '//android.widget.TextView[@text="CHECKOUT: INFORMATION"]'
     inputFirstName = '//android.widget.EditText[@content-desc="test-First Name"]'
     inputLastName ='//android.widget.EditText[@content-desc="test-Last Name"]'
     inputPostalCode = '//android.widget.EditText[@content-desc="test-Zip/Postal Code"]'

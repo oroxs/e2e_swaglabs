@@ -6,6 +6,11 @@ class CheckoutInfoPage:
     def __init__(self, driver):
         self.driver = driver
     
+    def check_title(self):
+        with allure.step("Check Title"):
+            check_title = self.driver.find_element(AppiumBy.XPATH, Loc.title).text
+            assert check_title == 'CHECKOUT: INFORMATION'
+
     def inputFirstName(self, firstname):
         with allure.step("Masukan First Name"):
             self.driver.find_element(AppiumBy.XPATH,Loc.inputFirstName).send_keys(firstname)
