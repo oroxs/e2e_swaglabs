@@ -1,0 +1,11 @@
+class Loc:
+    title = ''
+    product_name = ''
+    product_price = ''
+    total_price = ''
+    tax = ''
+    total = ''
+    button_cancel = ''
+    button_finish = ''
+    co_product1 = '//android.widget.TextView[@text="$29.99"]'
+    co_product2 = '//android.widget.TextView[@text="$9.99"]'
